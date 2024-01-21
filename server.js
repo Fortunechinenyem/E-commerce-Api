@@ -1,55 +1,36 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const app = express();
-const port = 8000;
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const app = express();
+// const port = 8000;
 
-// Middleware
-const sharp = require("sharp");
+// // Middleware
+// const sharpImageMiddleware = require("./middleware/sharpImageMiddleware");
+// const bodyParserMiddleware = require("./middleware/bodyParserMiddleware");
 
-app.use(express.json());
+// // Routes
+// const indexRoute = require("./routes/index");
+// const productRoutes = require("./routes/product");
+// const uploadRoute = require("./routes/upload");
 
-app.use("/images", (req, res, next) => {
-  // Use sharp to resize and optimize images
-  sharp(`images${req.url}`)
-    .resize(300, 200) // Adjust the dimensions as needed
-    .toBuffer()
-    .then((data) => {
-      res.set("Content-Type", "image/jpeg"); // Adjust content type based on your images
-      res.send(data);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
+// // Connect to MongoDB
+// mongoose.connect(
+//   "",
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   }
+// );
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Hello, API!");
-});
+// // Use Middleware
+// app.use(bodyParserMiddleware);
+// app.use(sharpImageMiddleware);
 
-const productRoutes = require("./routes/product");
-app.use("/api", productRoutes);
+// // Use Routes
+// app.use("/", indexRoute);
+// app.use("/api", productRoutes);
+// app.use("/api/upload", uploadRoute);
 
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-
-// Example route for handling image uploads
-app.post("/api/upload", upload.single("image"), (req, res) => {
-  // Process the uploaded image, store its path in the database, etc.
-  const imagePath = `uploads/${req.file.filename}`;
-  res.json({ imagePath });
-});
-
-// Connect to MongoDB
-mongoose.connect(
-  "mongodb+srv://fortunechinenyem:ecommerceapi@cluster0.t8n0ius.mongodb.net/",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-
-// Start server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// // Start server
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
