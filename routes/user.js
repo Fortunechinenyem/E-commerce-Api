@@ -1,13 +1,11 @@
-// routes/user.js
-const express = require("express");
-const router = express.Router();
-const authMiddleware = require("../middleware/auth");
-const userController = require("../controllers/user");
+const router = require("express").Router();
 
-// Get user profile
-router.get("/profile", authMiddleware, userController.getUserProfile);
+router.get("/usertest", (req, res) => {
+  res.send("user test is gbam!");
+});
 
-// Update user profile
-router.put("/profile/update", authMiddleware, userController.updateUserProfile);
-
+router.post("/userposttest", (req, res) => {
+  const username = req.body.username;
+  res.send("Your username is:" + username);
+});
 module.exports = router;
